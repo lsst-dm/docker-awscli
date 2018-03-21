@@ -1,6 +1,6 @@
 FROM alpine:3.7
 
-ARG AWS_DEFAULT_REGION=us-west-1
+ARG AWS_DEFAULT_REGION=us-east-1
 ARG AWSCLI_VER=1.14.2
 
 RUN apk add --no-cache --upgrade python3 && \
