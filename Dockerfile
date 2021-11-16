@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3
 
 ARG AWS_DEFAULT_REGION=us-east-1
 ARG AWSCLI_VER=1.14.61
