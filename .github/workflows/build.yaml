@@ -1,0 +1,30 @@
+name: Build
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: get tag
+        id: tag
+        shell: bash
+        run: |
+          if [ "$GITHUB_HEAD_REF" == "main" ]; then
+            echo tag="$(grep AWSCLI_VER Dockerfile | head -n 1 | cut -d'=' -f 2)" >> "${GITHUB_OUTPUT}"
+          fi
+      - name: Build and push
+        uses: lsst-dm/build-and-push@main
+        id: build
+        with:
+          push: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          platforms: linux/amd64,linux/arm64
+          image: ${{ github.repository }}
+          tag: ${{ steps.tag.outputs.tag}}
+
